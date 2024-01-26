@@ -1,6 +1,6 @@
-import { promises } from "fs";
-import { Resvg } from "@resvg/resvg-js";
-import axios from "axios";
+import { promises } from 'fs';
+import { Resvg } from '@resvg/resvg-js';
+import axios from 'axios';
 
 export async function circleCoordinates(
   normalizedX: number,
@@ -34,15 +34,17 @@ export async function circleCoordinates(
   const pngData = resvg.render();
   const pngBuffer = pngData.asPng();
 
-  await promises.writeFile("./out.png", pngBuffer);
+  const filename = `images/${new Date().getTime()}-circled.png`;
+  await promises.writeFile(filename, pngBuffer);
+  return filename;
 }
 
 async function convertImageToBase64(imageUrl: string) {
   try {
-    const response = await axios.get(imageUrl, { responseType: "arraybuffer" });
-    return Buffer.from(response.data, "binary").toString("base64");
+    const response = await axios.get(imageUrl, { responseType: 'arraybuffer' });
+    return Buffer.from(response.data, 'binary').toString('base64');
   } catch (error) {
-    console.error("Error converting image to base64:", error);
+    console.error('Error converting image to base64:', error);
     throw error;
   }
 }
