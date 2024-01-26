@@ -4,7 +4,9 @@ import multer from 'multer';
 import axios from 'axios';
 import fs from 'fs';
 import FormData from 'form-data';
-import { searchWithLLM } from './searchWithLLM';
+// import { searchWithLLM } from './search';
+import { generateNewImage } from './generateImage';
+import { searchWithLLM } from './search';
 
 const tmpDir = './.tmp';
 if (!fs.existsSync(tmpDir)) {
@@ -45,12 +47,34 @@ app.post('/upload', upload.single('file'), async (req, res) => {
         `Cloudflare API responded with status: ${response.status}`
       );
     }
-
+    // console.log({ response });
     const url = response.data.result.variants[0];
-    const llmResponse = await searchWithLLM(textInput, url);
+    console.log({ url });
 
-    console.log('File uploaded to Cloudflare:', response.data);
-    res.send('File uploaded successfully to Cloudflare');
+    const imageDescription = (await searchWithLLM(textInput, url)) as string;
+
+    //
+    const newImage = await generateNewImage(
+      `Generate what's inside the circle in this description: ${imageDescription}`
+    );
+
+    const maxAttempt = 10;
+    let currAttempt = 0;
+    let imgUrl = newImage;
+    while (currAttempt < maxAttempt) {
+      const nextImageDescription = await searchWithLLM(
+        'Find a detail in this image that is interesting.',
+        imgUrl as string
+      );
+      imgUrl = await generateNewImage(nextImageDescription as string);
+
+      // const llmResponse = await searchWithLLM(`Create a meme based on the following description: ${}`, nextImage);
+      currAttempt++;
+    }
+    // const llmResponse = await searchWithLLM(textInput, url);
+
+    // console.log('File uploaded to Cloudflare:', response.data);
+    res.send(`Image generated: ${newImage}`);
   } catch (error) {
     console.error('Error uploading to Cloudflare:', error);
     res.status(500).send('Error uploading to Cloudflare');
