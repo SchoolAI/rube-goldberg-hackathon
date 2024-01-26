@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Simple Upload Form</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+
+  <body>
+    <form
+      id="uploadForm"
+      action="/upload"
+      method="post"
+      enctype="multipart/form-data"
+    >
+      <label for="pictureUpload">Picture:</label>
+      <input
+        type="file"
+        id="pictureUpload"
+        name="file"
+        accept="image/*"
+      /><br /><br />
+      <label for="itemToFind">Item to find:</label>
+      <input type="text" id="itemToFind" name="itemToFind" /><br /><br />
+      <button type="submit">Submit</button>
+    </form>
+
+    <!-- <script src="./script.js"></script> -->
+  </body>
+</html>
