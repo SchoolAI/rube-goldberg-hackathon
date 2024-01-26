@@ -2,10 +2,6 @@ import { promises } from "fs";
 import { Resvg } from "@resvg/resvg-js";
 import axios from "axios";
 
-// example image: starry night sky
-const url =
-  "https://iso.500px.com/wp-content/uploads/2013/08/11834033-1170.jpeg";
-
 export async function circleCoordinates(
   normalizedX: number,
   normalizedY: number,
@@ -19,7 +15,7 @@ export async function circleCoordinates(
   <svg width="${width}" height="${height}" xmlns="http://www.w3.org/2000/svg">
       <!-- Background image -->
       <image
-        href="data:image/jpeg;base64,${base64}"
+        href="data:image/png;base64,${base64}"
         preserveAspectRatio="xMidYMid slice"
         width="${width}"
         height="${height}" />
