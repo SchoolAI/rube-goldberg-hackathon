@@ -19,7 +19,7 @@ async function searchWithLLM(search: string, originalImageUrl: string, currentIm
         {
           role: "user",
           content: [
-            { type: "text", text: `Find a small interesting detail in this image in 5 words or less` },
+            { type: "text", text: `describe what's in the yellow circle` },
             {
               type: "image_url",
               image_url: { "url": originalImageUrl },
@@ -38,7 +38,7 @@ async function searchWithLLM(search: string, originalImageUrl: string, currentIm
         {
           role: "user",
           content: [
-            { type: "text", text: `does this image have the item :${response.choices[0].message.content}?` },
+            { type: "text", text: `does this match a description of something in the image?: ${response.choices[0].message.content}?` },
             {
               type: "image_url",
               image_url: { "url": originalImageUrl },
@@ -63,5 +63,5 @@ async function searchWithLLM(search: string, originalImageUrl: string, currentIm
   }
 }
 
-searchWithLLM('eye', 'https://imagedelivery.net/x4t-2RLBwIBx59GMyqLu1g/32bb2258-813b-491a-9331-b2b8f3a71500/public')
+searchWithLLM('eye', 'https://imagedelivery.net/x4t-2RLBwIBx59GMyqLu1g/b9c6ffc3-6a43-4222-5e5f-32c2c6eb3100/public')
 export { searchWithLLM };
