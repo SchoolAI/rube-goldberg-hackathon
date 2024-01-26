@@ -4,7 +4,8 @@
   "main": "index.js",
   "license": "MIT",
   "scripts": {
-    "start": "tsc ./script.ts --outDir public && nodemon"
+    "start": "tsc ./script.ts --outDir public && nodemon",
+    "search": "ts-node --transpile-only search.ts"
   },
   "dependencies": {
     "@resvg/resvg-js": "^2.6.0",
